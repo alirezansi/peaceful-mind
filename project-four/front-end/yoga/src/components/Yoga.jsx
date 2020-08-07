@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-// import NewYogaForm from './NewYogaForm.jsx'
-import axios from 'axios'
+import NewYogaForm from './NewYogaForm.jsx'
 import {Link} from 'react-router-dom'
 // import Navbar from './Navbar.jsx'
-
+import axios from 'axios'
 
 
 
@@ -35,6 +34,40 @@ export default class Yoga extends Component {
         });
     }
 
+    addYoga = (event) =>  {
+        event.preventDefault();
+        fetch(baseURL, {
+            method: 'POST',
+            body: JSON.stringify({
+                newYoga:{
+                    name: this.state.name,
+                    img: this.state.img
+                }
+                
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            }).then( (res => {
+            return res.json();
+            })).then(response => {
+                console.log(response.data)
+                const newYoga = response.data
+                const copyYogas = [...this.state.yogas];
+                copyYogas.push(newYoga);
+                this.setState({
+                    yogas: copyYogas,
+                    newYoga:{
+                        name: '',
+                        img:''
+                    }
+                })
+        });
+        this.findDogs()
+    }
+
+
+
 
 render(){
     return(
@@ -49,6 +82,14 @@ render(){
                     )
                 })}
             </div>
+            <div>
+                <NewYogaForm 
+            
+            
+                /> 
+            </div>
+            
+
 
 
         </div>

@@ -1,6 +1,5 @@
 from flask import  Flask, jsonify, g
 from flask_cors import CORS
-
 import models
 from resources.yogas import yoga
 from resources.poses import pose
@@ -32,3 +31,5 @@ app.register_blueprint(pose, url_prefix='/api/v1/yogas/:id')
 if __name__ == '__main__':
     models.initialize()
     app.run(debug=DEBUG, port=PORT)
+
+

@@ -36,31 +36,3 @@ def get_one_yoga(id):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# #delete route 
-# @yoga.route('/<id>' ,  methods=['DELETE'])
-# def delete_yoga(id):
-#     delete_query = models.Yoga.delete().where(models.Yoga.id == id)
-#     delete_query.execute()
-#     return jsonify( data={},message='Successfully delete Yoga with id {}'.format(id) , status={'code': 200 , 'message' : 'Success'})

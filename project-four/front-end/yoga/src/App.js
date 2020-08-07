@@ -6,7 +6,7 @@ import EachYoga from './components/EachYoga.jsx'
 import EachPose from './components/EachPose.jsx'
 import About from './components/About'
 
-let baseURL = 'http://localhost:8000/api/v1/yogas/';
+
 
 
 class App extends Component {
