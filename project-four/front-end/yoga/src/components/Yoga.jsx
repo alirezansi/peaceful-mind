@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import NewYogaForm from './NewYogaForm.jsx'
 import {Link} from 'react-router-dom'
-// import Navbar from './Navbar.jsx'
-import axios from 'axios'
+import Navbar from './Navbar.jsx'
+
 
 
 
@@ -63,8 +63,19 @@ export default class Yoga extends Component {
                     }
                 })
         });
-        this.findDogs()
+        this.findYogas()
     }
+
+    handleChange =(event) =>{
+        const copyNewYoga = { ...this.state.newYoga }
+        copyNewYoga[event.target.id] = event.target.value
+
+        this.setState({
+            newYoga: copyNewYoga
+        })
+    }
+
+
 
 
 
@@ -72,6 +83,10 @@ export default class Yoga extends Component {
 render(){
     return(
         <div>
+            <div>
+                <Navbar />
+            </div>
+
             <div>
                 {this.state.yogas.map(yoga=>{
                     return(
@@ -84,8 +99,9 @@ render(){
             </div>
             <div>
                 <NewYogaForm 
-            
-            
+                    yoga={this.state.newYoga}
+                    handleChange={this.handleChange}
+                    addYoga={this.addYoga}
                 /> 
             </div>
             

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Switch,Route,Link} from 'react-router-dom'
+import {Switch,Route} from 'react-router-dom'
 import HomePage from './components/HomePage.jsx'
 import Yoga from './components/Yoga.jsx'
 import EachYoga from './components/EachYoga.jsx'
