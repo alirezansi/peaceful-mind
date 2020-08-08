@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-// import { Redirect , Link } from 'react-router-dom'
+import axios from 'axios'
 import Navbar from './Navbar'
+import NewPoseForm from './NewPoseForm'
 
-
-// let baseURL = 'http://localhost:8000/api/v1/yogas/';
-
+let baseURL = 'http://localhost:8000/api/v1/yogas/';
+let baseURLPose = 'http://localhost:8000/api/v1/poses/';
 
 
 export default class EachYoga extends Component {
@@ -16,13 +16,21 @@ export default class EachYoga extends Component {
             description:'',
             benefits : '',
             video : '',
-        }
+        },
+        showForm:false
     }
 
 
+    showForm = (event) =>{
+        this.setState({
+            showForm : !this.state.showForm 
+        })
+    }
+
 
     // componentDidMount() {
-    //     this.findPoses()
+    //     const yogaId = this.props.match.params.id
+    //     this.findPoses(yogaId)
     // }
 
     // findPoses= (yogaId) => {
@@ -36,7 +44,38 @@ export default class EachYoga extends Component {
     //     });
     // }
 
+    addPose = async (event) => {
+        event.preventDefault()
+        console.log(this.state.newPose)
+        try {
+            const response = await axios.post(baseURLPose, this.state.newPose)
 
+            const copyPoses = [...this.state.poses]
+            copyPoses.push(response.data)
+            this.setState({
+                poses: copyPoses,
+                newPose: {
+                    name: '',
+                    description: '',
+                    benefits: '',
+                    video:'',
+                    yoga: ''
+                }
+            })
+        }
+        catch (err) {
+            console.log(`oh no error again`, err)
+        }
+    }
+
+    handleChangePose = (event) => {
+        const copyNewPose = { ...this.state.newPose }
+        copyNewPose[event.target.id] = event.target.value
+
+        this.setState({
+            newPose: copyNewPose
+        })
+    }
 
 
 
@@ -45,10 +84,14 @@ export default class EachYoga extends Component {
     render() {
         return (
             <div>
-                <h2>each yoga</h2>
+                
             
                 <div>
                     <Navbar />
+                </div>
+                <h1>each yoga with poses</h1>
+                <div className='empty'>
+
                 </div>
                 <div>
                     {
@@ -63,13 +106,22 @@ export default class EachYoga extends Component {
                         })
                     }
                 </div>
-                <div>
-
+                <div className='plusShow'>
+                <button onClick={(event)=> this.showForm(event)}>+</button>
                 </div>
-
-
-
-
+                {this.state.showForm ?  
+                <div className='newPose'>
+                <NewPoseForm 
+                newPose={this.state.newPose}
+                handleChangePose={this.handleChangePose}
+                addPose={this.addPose}
+                yogaId={this.props.match.params.id}
+                />
+                </div>
+                : ''}
+                <div>
+                    <h1>footer</h1>
+                </div>
             </div>
         )
     }

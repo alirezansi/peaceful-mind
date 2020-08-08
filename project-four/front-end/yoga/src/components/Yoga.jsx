@@ -16,8 +16,18 @@ export default class Yoga extends Component {
         newYoga:{
             name: '',
             img:''
-        }
+        },
+        showForm: false
     }
+
+
+    showForm = (event) =>{
+        this.setState({
+            showForm : !this.state.showForm 
+        })
+    }
+
+
 
 
     componentDidMount() {
@@ -92,24 +102,31 @@ render(){
             <div>
                 <Navbar />
             </div>
-
-            <div>
+            <div className='yogas'>
                 {this.state.yogas.map(yoga=>{
                     return(
-                        <div key={yoga.id} >
-                            <h2><Link to={`/yogas/${yoga.id}/`}>{yoga.name}</Link></h2>
+                        <div className='yoga' key={yoga.id} >
+                            <h2><Link className='linkYoga'  to={`/yogas/${yoga.id}/`}>{yoga.name}</Link></h2>
                             <img src={yoga.img} alt='' />
                         </div>
                     )
                 })}
             </div>
-            <div>
+            <div className='plusShow'>
+                <button onClick={(event)=> this.showForm(event)}>+</button>
+            </div>
+            { this.state.showForm ? 
+            
+            <div className='yogaForm'>
                 <NewYogaForm 
                     newYoga={this.state.newYoga}
                     handleChange={this.handleChange}
                     addYoga={this.addYoga}
                 /> 
-            </div>
+            </div> : ''
+            
+            }
+            
             
 
 
