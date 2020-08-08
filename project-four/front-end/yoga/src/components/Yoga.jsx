@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import NewYogaForm from './NewYogaForm.jsx'
 import {Link} from 'react-router-dom'
 import Navbar from './Navbar.jsx'
+import axios from 'axios'
 
 
 
 
-
-let baseURL = 'http://localhost:8000/api/v1/yogas/';
+let baseURL = 'http://localhost:8000/api/v1/yogas/'
 
 
 export default class Yoga extends Component {
@@ -24,7 +24,23 @@ export default class Yoga extends Component {
         this.findYogas()
     }
 
-    findYogas= () => {
+
+    // findYogas = async () => {
+    //     try {
+    //         const response = await axios.get(baseURL)
+    //         const parsedResponse = response.data;
+    //         console.log( 'this is the parsedResponse')
+    //         console.log(parsedResponse)
+    //         this.setState({ 
+    //             yogas: parsedResponse
+    //         })
+    //     }
+    //     catch (err) {
+    //         console.log(err)
+    //     }
+    // }
+
+    findYogas = () => {
         fetch(baseURL ).then(res => {
             return res.json();
         }).then(data => {
@@ -34,35 +50,25 @@ export default class Yoga extends Component {
         });
     }
 
-    addYoga = (event) =>  {
-        event.preventDefault();
-        fetch(baseURL, {
-            method: 'POST',
-            body: JSON.stringify({
-                newYoga:{
-                    name: this.state.name,
-                    img: this.state.img
+
+    addYoga = async (event) => {
+        event.preventDefault()
+        try {
+            const response = await axios.post(baseURL , this.state.newYoga)
+
+            const copyYogas = [...this.state.yogas]
+            copyYogas.push(response.data)
+            this.setState({
+                workouts: copyYogas,
+                newYoga: {
+                    name: '',
+                    img:''
                 }
-                
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            }).then( (res => {
-            return res.json();
-            })).then(response => {
-                console.log(response.data)
-                const newYoga = response.data
-                const copyYogas = [...this.state.yogas];
-                copyYogas.push(newYoga);
-                this.setState({
-                    yogas: copyYogas,
-                    newYoga:{
-                        name: '',
-                        img:''
-                    }
-                })
-        });
+            })
+        }
+        catch (err) {
+            console.log(`oh nooooo fucking error`, err)
+        }
         this.findYogas()
     }
 
@@ -99,7 +105,7 @@ render(){
             </div>
             <div>
                 <NewYogaForm 
-                    yoga={this.state.newYoga}
+                    newYoga={this.state.newYoga}
                     handleChange={this.handleChange}
                     addYoga={this.addYoga}
                 /> 

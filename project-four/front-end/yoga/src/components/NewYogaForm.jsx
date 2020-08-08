@@ -1,15 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class NewYogaForm extends Component {
-    render() {
-        return (
-            <div>
-                <form onSubmit={this.props.addYoga}>
-                    <input type='text' id='name' value={this.props.yoga.name} onChange={this.props.handleChange} />
-                    <input type='text' id='img' value={this.props.yoga.img} onChange={this.props.handleChange} />
+export default function NewYogaForm(props) {
+    return (
+        <div>
+            <form onSubmit={props.addYoga}>
+                    <input type='text' id='name' value={props.newYoga.name} onChange={props.handleChange} />
+                    <input type='text' id='img' value={props.newYoga.img} onChange={props.handleChange} />
                     <input type='submit' ></input>
                 </form>
-            </div>
-        )
-    }
+        </div>
+    )
 }

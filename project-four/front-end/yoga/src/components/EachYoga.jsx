@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Redirect , Link } from 'react-router-dom'
+// import { Redirect , Link } from 'react-router-dom'
 import Navbar from './Navbar'
 
 
-let baseURL = 'http://localhost:8000/api/v1/yogas/';
+// let baseURL = 'http://localhost:8000/api/v1/yogas/';
 
 
 
@@ -21,20 +21,20 @@ export default class EachYoga extends Component {
 
 
 
-    componentDidMount() {
-        this.findPoses()
-    }
+    // componentDidMount() {
+    //     this.findPoses()
+    // }
 
-    findPoses= (yogaId) => {
-        fetch(baseURL + yogaId ).then(res => {
-            return res.json();
-        }).then(data => {
-            this.setState({
-            yoga : data.data,
-            poses : data.data.poses
-            });
-        });
-    }
+    // findPoses= (yogaId) => {
+    //     fetch(baseURL + yogaId ).then(res => {
+    //         return res.json();
+    //     }).then(data => {
+    //         this.setState({
+    //         yoga : data.data,
+    //         poses : data.data.poses
+    //         });
+    //     });
+    // }
 
 
 
