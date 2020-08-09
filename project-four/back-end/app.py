@@ -26,7 +26,7 @@ def after_request(response):
 CORS(yoga, origins=['http://localhost:3000'], supports_credentials=True)
 
 app.register_blueprint(yoga, url_prefix='/api/v1/yogas')
-app.register_blueprint(pose, url_prefix='/api/v1/yogas/:id')
+app.register_blueprint(pose, url_prefix='/api/v1/poses')
 
 if __name__ == '__main__':
     models.initialize()

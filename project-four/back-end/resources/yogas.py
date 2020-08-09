@@ -11,7 +11,7 @@ yoga = Blueprint('yogas', 'yoga')
 def get_all_excercises():
     try:
         yogas = [model_to_dict(yoga) for yoga in models.Yoga.select()]
-        # print(dogs)
+
         return jsonify(data=yogas, status={'code': 200, 'message': 'Success'})
     except:
         return jsonify(data={}, status={'code': 500, 'message': 'Error getting resources'})
@@ -29,10 +29,17 @@ def create_yogas():
 #show route
 @yoga.route('/<id>', methods=['GET'])
 def get_one_yoga(id):
+    print('heyyyyyyy')
     yoga = models.Yoga.get_by_id(id)
     yoga_dict = model_to_dict(yoga)
     return jsonify(data=yoga_dict , status={'code': 200 , 'message' : 'Success'})
-
+def get_all_dposes():
+    try:
+        poses = [model_to_dict(pose) for pose in yoga.poses] 
+        print(poses)
+        return jsonify(data=poses, status={'code': 200, 'message': 'Success'})
+    except:
+        return jsonify(data={}, status={'code': 500, 'message': 'Error getting resources'})
 
 
 
