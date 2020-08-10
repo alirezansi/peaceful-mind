@@ -93,7 +93,7 @@ render(){
                     return(
                         <div className='yoga' key={yoga.id} >
                             <h2><Link className='linkYoga'  to={`/yogas/${yoga.id}/`}>{yoga.name}</Link></h2>
-                            <img src={yoga.img} alt='' />
+                            <img className='yogaImg' src={yoga.img} alt='' />
                         </div>
                     )
                 })}

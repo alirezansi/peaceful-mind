@@ -48,13 +48,11 @@ export default class EachYoga extends Component {
             return res.json();
         }).then(data => {
             let myPoses= data.data 
-            console.log(myPoses)
             let myPoseArr = []
             for(let i=0 ; i < myPoses.length ; i++ ){
                 let myYogaId = parseInt (yogaId , 10)
                 if( myYogaId === myPoses[i].yoga.id){
                     myPoseArr.push(myPoses[i])
-                    console.log(myPoseArr)
                 }   
                 this.setState({
                     poses: myPoseArr
@@ -89,6 +87,7 @@ export default class EachYoga extends Component {
         catch (err) {
             console.log(`oh no error :( `, err)
         }
+    this.findPoses()
     }
 
     handleChangePose = (event) => {
@@ -112,21 +111,24 @@ export default class EachYoga extends Component {
                     <Navbar />
                 </div>
                 <div>
-                    <h1>{this.state.yoga.name}</h1>
-                    {/* <img src={this.state.yoga.img} /> */}
+                    <h1 className='headerEachYoga'>{this.state.yoga.name}</h1>
                 </div>
-
-                <div className='empty'>
-
-                </div>
-                <div>
+                <div className='poses'>
                     {
                         this.state.poses.map(pose =>{
                             return(
-                                <div key={pose.id}>
-                                    <h6>{pose.name}</h6>
-                                    <p>{pose.description}</p>
-                                    <p>{pose.benefits}</p>
+                                <div className='eachPose' key={pose.id}>
+                                    <div className='videos'>
+                                    <iframe width="300" height="200" src={pose.video} ></iframe>
+                                    </div>
+                                    <div className='descriptions'>
+                                        <h2>Name: {pose.name}</h2>
+                                        <h4>Benefits: {pose.benefits}</h4>
+                                        <p>Description: {pose.description}</p>
+                                        
+                                    </div>
+                                    
+                                    
                                 </div>
                             )
                         })
