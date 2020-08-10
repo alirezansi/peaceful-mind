@@ -14,7 +14,7 @@ class Yoga(Model):
         database = DATABASE
 
 class Pose(Model):
-    yoga= ForeignKeyField(Yoga , backref='Poses')
+    yoga_id= ForeignKeyField(Yoga , backref='Poses')
     name = CharField()
     description = CharField()
     benefits = CharField()
