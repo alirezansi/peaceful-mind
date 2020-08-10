@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
 import NewPoseForm from './NewPoseForm'
-
+import Footer from './Footer.jsx'
 let baseURL = 'http://localhost:8000/api/v1/yogas/';
+
+
 let baseURLPose = 'http://localhost:8000/api/v1/poses/';
 
-
+//learned this.props.match.params from https://stackoverflow.com/questions/54114416/how-to-access-this-props-match-params-along-with-other-props
 export default class EachYoga extends Component {
     state = {
         yoga: {},
@@ -16,6 +18,7 @@ export default class EachYoga extends Component {
             description:'',
             benefits : '',
             video : '',
+            yoga:this.props.match.params.id
         },
         showForm:false
     }
@@ -28,28 +31,49 @@ export default class EachYoga extends Component {
     }
 
 
-    // componentDidMount() {
-    //     const yogaId = this.props.match.params.id
-    //     this.findPoses(yogaId)
-    // }
+    componentDidMount() {
+        const yogaId = this.props.match.params.id
+        this.findPoses(yogaId)
+    }
 
-    // findPoses= (yogaId) => {
-    //     fetch(baseURL + yogaId ).then(res => {
-    //         return res.json();
-    //     }).then(data => {
-    //         this.setState({
-    //         yoga : data.data,
-    //         poses : data.data.poses
-    //         });
-    //     });
-    // }
+    findPoses= (yogaId) => {
+        fetch(baseURL + yogaId ).then(res => {
+            return res.json();
+        }).then(data => {
+            this.setState({
+            yoga : data.data,
+            });
+        });
+        fetch(baseURLPose).then(res => {
+            return res.json();
+        }).then(data => {
+            let myPoses= data.data 
+            console.log(myPoses)
+            let myPoseArr = []
+            for(let i=0 ; i < myPoses.length ; i++ ){
+                let myYogaId = parseInt (yogaId , 10)
+                if( myYogaId === myPoses[i].yoga.id){
+                    myPoseArr.push(myPoses[i])
+                    console.log(myPoseArr)
+                }   
+                this.setState({
+                    poses: myPoseArr
+                })
+            }
+        });
+    }
+
+
+
+
+
+
 
     addPose = async (event) => {
         event.preventDefault()
         console.log(this.state.newPose)
         try {
             const response = await axios.post(baseURLPose, this.state.newPose)
-
             const copyPoses = [...this.state.poses]
             copyPoses.push(response.data)
             this.setState({
@@ -59,19 +83,17 @@ export default class EachYoga extends Component {
                     description: '',
                     benefits: '',
                     video:'',
-                    yoga: ''
                 }
             })
         }
         catch (err) {
-            console.log(`oh no error again`, err)
+            console.log(`oh no error :( `, err)
         }
     }
 
     handleChangePose = (event) => {
         const copyNewPose = { ...this.state.newPose }
         copyNewPose[event.target.id] = event.target.value
-
         this.setState({
             newPose: copyNewPose
         })
@@ -89,7 +111,11 @@ export default class EachYoga extends Component {
                 <div>
                     <Navbar />
                 </div>
-                <h1>each yoga with poses</h1>
+                <div>
+                    <h1>{this.state.yoga.name}</h1>
+                    {/* <img src={this.state.yoga.img} /> */}
+                </div>
+
                 <div className='empty'>
 
                 </div>
@@ -98,7 +124,7 @@ export default class EachYoga extends Component {
                         this.state.poses.map(pose =>{
                             return(
                                 <div key={pose.id}>
-                                    <h3>{pose.name}</h3>
+                                    <h6>{pose.name}</h6>
                                     <p>{pose.description}</p>
                                     <p>{pose.benefits}</p>
                                 </div>
@@ -120,7 +146,7 @@ export default class EachYoga extends Component {
                 </div>
                 : ''}
                 <div>
-                    <h1>footer</h1>
+                    <Footer />
                 </div>
             </div>
         )

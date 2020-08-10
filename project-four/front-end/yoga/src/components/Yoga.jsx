@@ -3,7 +3,7 @@ import NewYogaForm from './NewYogaForm.jsx'
 import {Link} from 'react-router-dom'
 import Navbar from './Navbar.jsx'
 import axios from 'axios'
-
+import Footer from './Footer'
 
 
 
@@ -35,21 +35,6 @@ export default class Yoga extends Component {
     }
 
 
-    // findYogas = async () => {
-    //     try {
-    //         const response = await axios.get(baseURL)
-    //         const parsedResponse = response.data;
-    //         console.log( 'this is the parsedResponse')
-    //         console.log(parsedResponse)
-    //         this.setState({ 
-    //             yogas: parsedResponse
-    //         })
-    //     }
-    //     catch (err) {
-    //         console.log(err)
-    //     }
-    // }
-
     findYogas = () => {
         fetch(baseURL ).then(res => {
             return res.json();
@@ -65,7 +50,6 @@ export default class Yoga extends Component {
         event.preventDefault()
         try {
             const response = await axios.post(baseURL , this.state.newYoga)
-
             const copyYogas = [...this.state.yogas]
             copyYogas.push(response.data)
             this.setState({
@@ -102,6 +86,8 @@ render(){
             <div>
                 <Navbar />
             </div>
+            <div className='yogaHeader'>
+            </div>
             <div className='yogas'>
                 {this.state.yogas.map(yoga=>{
                     return(
@@ -127,7 +113,9 @@ render(){
             
             }
             
-            
+            <div>
+                <Footer />
+            </div>
 
 
 
