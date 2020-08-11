@@ -86,7 +86,7 @@ export default class EachYoga extends Component {
         catch (err) {
             console.log(`oh no error :( `, err)
         }
-    this.findPoses()
+    this.findPoses(this.props.match.params.id)
     }
 
     handleChangePose = (event) => {
@@ -98,6 +98,16 @@ export default class EachYoga extends Component {
     }
 
 
+    removePose = async (poseId) => {
+        try {
+            const response = await axios.delete(baseURLPose + poseId).then(() => {
+                this.findPoses(this.props.match.params.id)
+            })
+        }
+        catch (err) {
+            console.log(`delete does not work`, err)
+        }
+    }
 
 
 
@@ -120,7 +130,7 @@ export default class EachYoga extends Component {
                                     <div className='videos'>
                                     <iframe width="300" height="200" src={pose.video} ></iframe>
                                     <div>
-                                        <img className='trash' alt='' src='https://static.thenounproject.com/png/147529-200.png'></img>
+                                        <img onClick={()=> this.removePose(pose.id) } className='trash' alt='' src='https://static.thenounproject.com/png/147529-200.png'></img>
                                         <img className='trash' alt='' src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Edit_icon_%28the_Noun_Project_30184%29.svg/1024px-Edit_icon_%28the_Noun_Project_30184%29.svg.png'></img>
                                     </div>
                                     </div>
