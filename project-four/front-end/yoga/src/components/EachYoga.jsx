@@ -3,6 +3,8 @@ import axios from 'axios'
 import Navbar from './Navbar'
 import NewPoseForm from './NewPoseForm'
 import Footer from './Footer.jsx'
+import EditPoseForm from './EditPoseForm.jsx'
+
 
 let baseURL = 'http://localhost:8000/api/v1/yogas/';
 let baseURLPose = 'http://localhost:8000/api/v1/poses/';
@@ -19,7 +21,11 @@ export default class EachYoga extends Component {
             video : '',
             yoga:this.props.match.params.id
         },
-        showForm:false
+        showForm:false,
+        editForm:false,
+        idOfPoseToEdit: -1,
+        CurrentPoseBeingEdited: null
+
     }
 
 
@@ -29,6 +35,16 @@ export default class EachYoga extends Component {
         })
     }
 
+    editForm = (event) =>{
+        this.setState({
+            editForm : !this.state.editForm
+        })
+    }
+    closeForm = (event) =>{
+        this.setState({
+            idOfPoseToEdit : -1
+        })
+    }
 
     componentDidMount() {
         const yogaId = this.props.match.params.id
@@ -110,6 +126,19 @@ export default class EachYoga extends Component {
     }
 
 
+    editCurrentPose = (pose) => {
+        this.setState({
+            idOfPoseToEdit: pose.id,
+            CurrentPoseBeingEdited: {
+                id:pose.id,
+                name: pose.name,
+                benefits: pose.benefits,
+                description: pose.description,
+                video: pose.video
+            }
+        })
+}
+
 
     render() {
         return (
@@ -121,6 +150,15 @@ export default class EachYoga extends Component {
                 </div>
                 <div>
                     <h1 className='headerEachYoga'>{this.state.yoga.name}</h1>
+                    {this.state.idOfPoseToEdit != -1 ? 
+                    <EditPoseForm findPoses={this.findPoses} 
+                        CurrentPoseBeingEdited={this.state.CurrentPoseBeingEdited}
+                        yogaId={this.props.match.params.id}
+                        closeForm={this.closeForm}
+                        />
+                    : null
+                    }
+                    
                 </div>
                 <div className='poses'>
                     {
@@ -131,17 +169,15 @@ export default class EachYoga extends Component {
                                     <iframe width="300" height="200" src={pose.video} ></iframe>
                                     <div>
                                         <img onClick={()=> this.removePose(pose.id) } className='trash' alt='' src='https://static.thenounproject.com/png/147529-200.png'></img>
-                                        <img className='trash' alt='' src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Edit_icon_%28the_Noun_Project_30184%29.svg/1024px-Edit_icon_%28the_Noun_Project_30184%29.svg.png'></img>
+                                        <img onClick={() => this.editCurrentPose(pose)} className='trash' alt='' src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Edit_icon_%28the_Noun_Project_30184%29.svg/1024px-Edit_icon_%28the_Noun_Project_30184%29.svg.png'></img>
                                     </div>
                                     </div>
+                                
                                     <div className='descriptions'>
                                         <h2>{pose.name}</h2>
                                         <h4>Benefits: {pose.benefits}</h4>
                                         <p>Description: {pose.description}</p>
-                                        
                                     </div>
-                                    
-                                    
                                 </div>
                             )
                         })

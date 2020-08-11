@@ -108,7 +108,7 @@ body{
 }
 
 
-.yogaForm,.newPose{
+.yogaForm,.newPose , .EditPoseForm{
     text-align: center;
     background-color: #424242;
     padding: 40px;
@@ -171,6 +171,7 @@ button{
 }
 
 
+
 .descriptions{
     margin-left: 60px;
     width: 600px;
@@ -186,10 +187,9 @@ button{
     text-align: center;
 }
 
-
-
-
-
+.close{
+    text-align: right;
+}
 
 
 
