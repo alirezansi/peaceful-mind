@@ -3,9 +3,8 @@ import axios from 'axios'
 import Navbar from './Navbar'
 import NewPoseForm from './NewPoseForm'
 import Footer from './Footer.jsx'
+
 let baseURL = 'http://localhost:8000/api/v1/yogas/';
-
-
 let baseURLPose = 'http://localhost:8000/api/v1/poses/';
 
 //learned this.props.match.params from https://stackoverflow.com/questions/54114416/how-to-access-this-props-match-params-along-with-other-props
@@ -120,9 +119,13 @@ export default class EachYoga extends Component {
                                 <div className='eachPose' key={pose.id}>
                                     <div className='videos'>
                                     <iframe width="300" height="200" src={pose.video} ></iframe>
+                                    <div>
+                                        <img className='trash' alt='' src='https://static.thenounproject.com/png/147529-200.png'></img>
+                                        <img className='trash' alt='' src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Edit_icon_%28the_Noun_Project_30184%29.svg/1024px-Edit_icon_%28the_Noun_Project_30184%29.svg.png'></img>
+                                    </div>
                                     </div>
                                     <div className='descriptions'>
-                                        <h2>Name: {pose.name}</h2>
+                                        <h2>{pose.name}</h2>
                                         <h4>Benefits: {pose.benefits}</h4>
                                         <p>Description: {pose.description}</p>
                                         
