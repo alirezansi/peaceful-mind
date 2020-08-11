@@ -24,11 +24,11 @@ def after_request(response):
     g.db.close()
     return response
 
-CORS(yoga, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(yoga, origins=['http://localhost:3000' , 'https://peaceful-mind.herokuapp.com'], supports_credentials=True)
 
 app.register_blueprint(yoga, url_prefix='/api/v1/yogas')
 
-CORS(pose, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(pose, origins=['http://localhost:3000' , 'https://peaceful-mind.herokuapp.com'], supports_credentials=True)
 app.register_blueprint(pose, url_prefix='/api/v1/poses')
 
 
