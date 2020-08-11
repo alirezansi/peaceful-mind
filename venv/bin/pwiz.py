@@ -1,4 +1,4 @@
-#!/Users/alirezanasiri/peaceful-mind/project-four/back-end/venv/bin/python3
+#!/Users/alirezanasiri/peaceful-mind/venv/bin/python3
 
 import datetime
 import sys

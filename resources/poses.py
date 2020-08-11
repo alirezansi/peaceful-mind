@@ -43,4 +43,3 @@ def update_pose(id):
     update_pose= models.Pose.get_by_id(id)
 
     return jsonify(data=model_to_dict(update_pose), message='Successfully update pose with id {}'.format(id) , status={'code': 200 , 'message' : 'Success'} )
-

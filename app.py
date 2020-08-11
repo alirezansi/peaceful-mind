@@ -33,8 +33,8 @@ app.register_blueprint(pose, url_prefix='/api/v1/poses')
 
 
 if 'ON_HEROKU' in os.environ: 
-  print('\non heroku!')
-  models.initialize()
+    print('\non heroku!')
+    models.initialize()
 
 
 

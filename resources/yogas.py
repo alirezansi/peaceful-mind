@@ -33,6 +33,3 @@ def get_one_yoga(id):
     yoga = models.Yoga.get_by_id(id)
     yoga_dict = model_to_dict(yoga)
     return jsonify(data=yoga_dict , status={'code': 200 , 'message' : 'Success'})
-
-
-
