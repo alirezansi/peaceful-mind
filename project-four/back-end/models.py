@@ -1,9 +1,16 @@
+import os
 from peewee import *
 import datetime
+from playhouse.db_url import connect
 
 
 
-DATABASE = SqliteDatabase('yoga.sqlite')
+
+if 'ON_HEROKU' in os.environ: 
+    DATABASE = connect(os.environ.get('DATABASE_URL')) 
+else:
+    DATABASE = SqliteDatabase('yoga.sqlite')
+
 
 class Yoga(Model):
     name = CharField()
@@ -14,7 +21,7 @@ class Yoga(Model):
         database = DATABASE
 
 class Pose(Model):
-    yoga_id= ForeignKeyField(Yoga , backref='Poses')
+    yoga= ForeignKeyField(Yoga , backref='Poses')
     name = CharField()
     description = CharField()
     benefits = CharField()
