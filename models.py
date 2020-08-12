@@ -23,15 +23,12 @@ class Yoga(Model):
 class Pose(Model):
     yoga= ForeignKeyField(Yoga , backref='Poses')
     name = CharField()
-    description = CharField()
-    benefits = CharField()
-    video = CharField()
+    description = CharField(max_length= 3000)
+    benefits = CharField(max_length=3000)
+    video = CharField(max_length=3000)
 
     class Meta:
         database = DATABASE
-
-
-
 
 
 

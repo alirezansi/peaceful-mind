@@ -7,6 +7,19 @@ from playhouse.shortcuts import model_to_dict
 pose = Blueprint('poses', 'pose')
 
 
+#index route
+@pose.route('/', methods=["GET"])
+def get_all_poses():
+    try:
+        poses = [model_to_dict(pose) for pose in models.Pose.select()]
+        print(poses)
+        return jsonify(data=poses, status={'code': 200, 'message': 'Success'})
+    except:
+        return jsonify(data={}, status={'code': 500, 'message': 'Error getting resources'})
+
+
+
+
 #create pose
 @pose.route('/', methods=["POST"])
 def create_poses():
@@ -16,14 +29,6 @@ def create_poses():
     pose_data = model_to_dict(new_pose)
     return jsonify(data=pose_data, status={'code': 200, 'message': 'Success'})
 
-@pose.route('/', methods=["GET"])
-def get_all_poses():
-    try:
-        poses = [model_to_dict(pose) for pose in models.Pose.select()]
-
-        return jsonify(data=poses, status={'code': 200, 'message': 'Success'})
-    except:
-        return jsonify(data={}, status={'code': 500, 'message': 'Error getting resources'})
 
 #delete route 
 @pose.route('/<id>' ,  methods=['DELETE'])
